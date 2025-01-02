@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Free Media Downloader</title>
+</head>
+<body>
+    <h1>Media Downloader</h1>
+    <input type="text" id="url" placeholder="Enter video URL">
+    <button onclick="download()">Download</button>
+    <div id="output"></div>
+    <script>
+        async function download() {
+            const url = document.getElementById('url').value;
+            const response = await fetch('https://your-backend-url/render-api', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url }),
+            });
+            const data = await response.json();
+            if (data.error) {
+                document.getElementById('output').textContent = `Error: ${data.error}`;
+            } else {
+                document.getElementById('output').innerHTML = `<a href="${data.downloadLink}">Click to download</a>`;
+            }
+        }
+    </script>
+</body>
+</html>
